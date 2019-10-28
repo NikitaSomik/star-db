@@ -17,7 +17,7 @@ export default class RandomPlanet extends Component {
 
     componentDidMount() {
         this.updatePlanet();
-        this.interval = setInterval(this.updatePlanet, 10000);
+        this.interval = setInterval(this.updatePlanet, 3000);
     }
 
     componentWillUnmount() {
@@ -65,13 +65,17 @@ export default class RandomPlanet extends Component {
         );
     }
 }
-
+// Состояние загрузки можно хранить в state.
+// Разделение ответственностей
+// Компоненты которые занимаются отрисовкой, отображением не занимаются логикой, а компоненты которые занимаются логикой не занимаются отрисовкой.
 const PlanetView = ({ planet }) => {
 
     const { id, name, population,
         rotationPeriod, diameter } = planet;
 
     return (
+        // React Fragment - это специальный элемент обвертки, который нужен исключительно, чтобы сгруппировать другие элементы не создавая лишних DOM объектов,
+        // по сколько из ф-ции render, мы можем вернуть только один элемент.
         <React.Fragment>
             <img className="planet-image"
                  src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}

@@ -1,3 +1,36 @@
+MOUNTING - это когда компонент создается и отображается на странице
+--------
+constructor() => render() => componentDidMount()
+
+UPDATES - это когда компонент может получать обновления
+-------
+New Props
+            => render() => componentDidUpdate(prevProps, prevState)
+setState()
+
+UNMOUNTING - это когда компонент не нужен и удаляется со странице
+-------
+componentWillUnmount()
+
+ERROR - это когда компонент получает ошибку, которая не была поймана раньше
+-----
+componentDidCatch()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
