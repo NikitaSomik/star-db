@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './person-details.css';
 import SwapiService from "../../services/swapi-service";
 import Spinner from "../spinner";
+import ErrorButton from "../error-button";
 
 export default class PersonDetails extends Component {
 
@@ -14,11 +15,12 @@ export default class PersonDetails extends Component {
     };
 
     componentDidMount() {
-        this.interval = setInterval(this.updatePerson, 10000);
+        // this.interval = setInterval(this.updatePerson, 3000);
+        this.updatePerson();
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        // clearInterval(this.interval);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -27,28 +29,32 @@ export default class PersonDetails extends Component {
         }
     }
 
-    onPersonLoaded = (person) => {
-        this.setState({
-            person,
-            loading: false
-        });
-    };
-
     updatePerson() {
         const { personId } = this.props;
         if (!personId) {
             return;
         }
 
+        this.setState({
+            loading: false
+        });
+
         this.swapiService
             .getPerson(personId)
-            .then((person) => this.onPersonLoaded(person));
+            .then((person) => {
+                this.setState({
+                    person,
+                    loading: false
+                });
+            });
     }
 
     render() {
 
         if (!this.state.person) {
             return <span>Select a person from a list</span>;
+        } else if (this.state.loading) {
+            return <Spinner/>;
         }
 
         const { person, loading } = this.state;
@@ -90,6 +96,8 @@ const PersonView = ({ person }) => {
                         <span>{eyeColor}</span>
                     </li>
                 </ul>
+
+                <ErrorButton />
             </div>
         </React.Fragment>
     );
