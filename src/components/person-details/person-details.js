@@ -23,11 +23,18 @@ export default class PersonDetails extends Component {
         // clearInterval(this.interval);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps) {
         if (this.props.personId !== prevProps.personId) {
             this.updatePerson();
         }
     }
+
+    onPersonLoaded = (person) => {
+        this.setState({
+            person,
+            loading: false
+        });
+    };
 
     updatePerson() {
         const { personId } = this.props;
